@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, Patch, Post, Req } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+} from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
@@ -8,8 +16,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(): string {
-    return `This action returns a one user`;
+  findOne(@Param('id') id: string): string {
+    return `This action returns a ${id} user`;
   }
 
   @Post()
@@ -19,12 +27,12 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(): string {
-    return 'This action removes a #id user';
+  remove(@Param('id') id: string): string {
+    return `This action removes a ${id} user`;
   }
 
   @Patch(':id')
-  update(): string {
-    return 'This action updates a #id user';
+  update(@Param('id') id: string): string {
+    return `This action updates a ${id} user`;
   }
 }
