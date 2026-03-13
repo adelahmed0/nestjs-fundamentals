@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Patch, Post, Req } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
@@ -13,7 +13,8 @@ export class UsersController {
   }
 
   @Post()
-  create(): string {
+  create(@Req() req: Request): string {
+    console.log(req);
     return 'This action adds a new user';
   }
 
