@@ -1,11 +1,11 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
   Param,
   Patch,
   Post,
-  Req,
 } from '@nestjs/common';
 
 @Controller('users')
@@ -21,8 +21,8 @@ export class UsersController {
   }
 
   @Post()
-  create(@Req() req: Request): string {
-    console.log(req);
+  create(@Body() userData: any): string {
+    console.log(userData);
     return 'This action adds a new user';
   }
 
