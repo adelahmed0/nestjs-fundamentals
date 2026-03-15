@@ -32,7 +32,8 @@ export class UsersController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string): string {
+  update(@Param('id') id: string, @Body() userData: any): string {
+    console.log(userData);
     return `This action updates a ${id} user`;
   }
 }
