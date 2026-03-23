@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -21,19 +23,21 @@ export class UsersController {
   }
 
   @Post()
+  @HttpCode(201)
   create(@Body() userData: any): string {
     console.log(userData);
-    return 'This action adds a new user';
-  }
-
-  @Delete(':username')
-  remove(@Param('username') username: string): string {
-    return `This action removes a ${username} user`;
+    return `User created: ${JSON.stringify(userData)}`;
   }
 
   @Patch(':username')
   update(@Param('username') username: string, @Body() userData: any): string {
     console.log(userData);
-    return `This action updates a ${username} user`;
+    return `User updated: ${username} ${JSON.stringify(userData)}`;
+  }
+
+  @Delete(':username')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  remove(@Param('username') username: string): string {
+    return `This action removes a ${username} user`;
   }
 }
