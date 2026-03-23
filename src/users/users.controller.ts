@@ -15,9 +15,9 @@ export class UsersController {
     return ['user1', 'user2', 'user3'];
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string): string {
-    return `This action returns a ${id} user`;
+  @Get(':username')
+  findOne(@Param('username') username: string): string {
+    return `This action returns a ${username} user`;
   }
 
   @Post()
@@ -26,14 +26,14 @@ export class UsersController {
     return 'This action adds a new user';
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string): string {
-    return `This action removes a ${id} user`;
+  @Delete(':username')
+  remove(@Param('username') username: string): string {
+    return `This action removes a ${username} user`;
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() userData: any): string {
+  @Patch(':username')
+  update(@Param('username') username: string, @Body() userData: any): string {
     console.log(userData);
-    return `This action updates a ${id} user`;
+    return `This action updates a ${username} user`;
   }
 }
