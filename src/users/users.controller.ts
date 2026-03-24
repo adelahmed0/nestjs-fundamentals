@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -24,7 +25,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): UserEntity | undefined {
+  findOne(@Param('id', ParseUUIDPipe) id: string): UserEntity | undefined {
     return this.users.find((user) => user.id === id);
   }
 
@@ -41,7 +42,7 @@ export class UsersController {
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
   ): UserEntity {
     const index = this.users.findIndex((user) => user.id === id);
@@ -57,7 +58,7 @@ export class UsersController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id') id: string): undefined {
+  remove(@Param('id', ParseUUIDPipe) id: string): undefined {
     this.users = this.users.filter((user) => user.id !== id);
   }
 }
