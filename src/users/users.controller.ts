@@ -10,6 +10,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -31,8 +32,11 @@ export class UsersController {
   }
 
   @Patch(':username')
-  update(@Param('username') username: string, @Body() userData: any): string {
-    return `User updated: ${username} ${JSON.stringify(userData)}`;
+  update(
+    @Param('username') username: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): string {
+    return `User updated: ${username} ${JSON.stringify(updateUserDto)}`;
   }
 
   @Delete(':username')
