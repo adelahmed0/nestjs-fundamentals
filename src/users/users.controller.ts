@@ -9,6 +9,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { CreateUserDto } from './dtos/createUser.dto';
 
 @Controller('users')
 export class UsersController {
@@ -24,14 +25,13 @@ export class UsersController {
 
   @Post()
   @HttpCode(201)
-  create(@Body() userData: any): string {
-    console.log(userData);
-    return `User created: ${JSON.stringify(userData)}`;
+  create(@Body() userData: CreateUserDto): string {
+    // DTO => Data Transfer Object
+    return `User created: ${userData.name} ${userData.email}`;
   }
 
   @Patch(':username')
   update(@Param('username') username: string, @Body() userData: any): string {
-    console.log(userData);
     return `User updated: ${username} ${JSON.stringify(userData)}`;
   }
 
