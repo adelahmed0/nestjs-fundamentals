@@ -11,24 +11,32 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserEntity } from './user.entity';
+import { v4 as uuid } from 'uuid';
 
 @Controller('users')
 export class UsersController {
+  private readonly users: UserEntity[] = [];
+
   @Get()
-  find(): string[] {
-    return ['user1', 'user2', 'user3'];
+  find(): UserEntity[] {
+    return this.users;
   }
 
-  @Get(':username')
-  findOne(@Param('username') username: string): string {
-    return `This action returns a ${username} user`;
+  @Get(':id')
+  findOne(@Param('id') id: string): UserEntity | undefined {
+    return this.users.find((user) => user.id === id);
   }
 
   @Post()
   @HttpCode(201)
-  create(@Body() createUserDto: CreateUserDto): string {
-    // DTO => Data Transfer Object
-    return `User created: ${createUserDto.name} ${createUserDto.email}`;
+  create(@Body() createUserDto: CreateUserDto): UserEntity {
+    const newUser: UserEntity = {
+      id: uuid(),
+      ...createUserDto,
+    };
+    this.users.push(newUser);
+    return newUser;
   }
 
   @Patch(':username')
