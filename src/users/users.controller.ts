@@ -16,7 +16,7 @@ import { v4 as uuid } from 'uuid';
 
 @Controller('users')
 export class UsersController {
-  private readonly users: UserEntity[] = [];
+  private users: UserEntity[] = [];
 
   @Get()
   find(): UserEntity[] {
@@ -39,17 +39,25 @@ export class UsersController {
     return newUser;
   }
 
-  @Patch(':username')
+  @Patch(':id')
   update(
-    @Param('username') username: string,
+    @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
-  ): string {
-    return `User updated: ${username} ${JSON.stringify(updateUserDto)}`;
+  ): UserEntity {
+    const index = this.users.findIndex((user) => user.id === id);
+    if (index === -1) {
+      throw new Error('User not found');
+    }
+    this.users[index] = {
+      ...this.users[index],
+      ...updateUserDto,
+    };
+    return this.users[index];
   }
 
-  @Delete(':username')
+  @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('username') username: string): string {
-    return `This action removes a ${username} user`;
+  remove(@Param('id') id: string): undefined {
+    this.users = this.users.filter((user) => user.id !== id);
   }
 }
