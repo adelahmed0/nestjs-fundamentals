@@ -25,9 +25,9 @@ export class UsersController {
 
   @Post()
   @HttpCode(201)
-  create(@Body() userData: CreateUserDto): string {
+  create(@Body() createUserDto: CreateUserDto): string {
     // DTO => Data Transfer Object
-    return `User created: ${userData.name} ${userData.email}`;
+    return `User created: ${createUserDto.name} ${createUserDto.email}`;
   }
 
   @Patch(':username')
