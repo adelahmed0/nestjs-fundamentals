@@ -1,11 +1,11 @@
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { v4 as uuid } from 'uuid';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   private users: UserEntity[] = [];
 
   findUsers(): UserEntity[] {
@@ -13,7 +13,17 @@ export class UserService {
   }
 
   findUserById(id: string): UserEntity {
-    return this.users.find((user) => user.id === id);
+    const user = this.users.find((user) => user.id === id);
+    if (!user) {
+      throw new NotFoundException({
+        statusCode: 404,
+        message: 'Resource Not Found',
+        errors: {
+          id: `User with id ${id} not found`,
+        },
+      });
+    }
+    return user;
   }
 
   createUser(createUserDto: CreateUserDto): UserEntity {
