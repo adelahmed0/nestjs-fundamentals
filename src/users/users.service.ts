@@ -1,14 +1,17 @@
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { v4 as uuid } from 'uuid';
+import { APP_NAME } from './users.constants';
 
 @Injectable()
 export class UsersService {
+  constructor(@Inject(APP_NAME) private readonly appName: string) {}
   private users: UserEntity[] = [];
 
   findUsers(): UserEntity[] {
+    console.log(this.appName);
     return this.users;
   }
 
