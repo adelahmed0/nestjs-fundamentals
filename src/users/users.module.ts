@@ -24,6 +24,13 @@ const loggerAliasProvider = {
   useExisting: LoggerService,
 };
 
+@Injectable()
+class DatabaseConnection {
+  async connectToDB(): Promise<string> {
+    return await Promise.resolve('connected');
+  }
+}
+
 @Module({
   imports: [],
   controllers: [UsersController],
@@ -32,6 +39,7 @@ const loggerAliasProvider = {
     UserHabitsFactory,
     LoggerService,
     loggerAliasProvider,
+    DatabaseConnection,
     {
       provide: APP_NAME,
       useValue: 'NestJS Fundamentals',
@@ -45,10 +53,16 @@ const loggerAliasProvider = {
     },
     {
       provide: USER_HABITS,
-      useFactory: (userHabitsFactory: UserHabitsFactory) => {
-        return userHabitsFactory.get();
+      useFactory: async (
+        userHabitsFactory: UserHabitsFactory,
+        db: DatabaseConnection,
+      ) => {
+        {
+          await db.connectToDB();
+          return userHabitsFactory.get();
+        }
       },
-      inject: [UserHabitsFactory],
+      inject: [UserHabitsFactory, DatabaseConnection],
     },
   ],
 })
