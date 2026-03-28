@@ -1,17 +1,25 @@
-import { Module } from '@nestjs/common';
+import { Injectable, Module } from '@nestjs/common';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { APP_NAME } from './users.constants';
+import { APP_NAME, USER_HABITS } from './users.constants';
 
 abstract class ConfigService {}
 class DevConfigService extends ConfigService {}
 class ProdConfigService extends ConfigService {}
+
+@Injectable()
+class UserHabitsFactory {
+  get() {
+    return ['eat', 'sleep', 'code'];
+  }
+}
 
 @Module({
   imports: [],
   controllers: [UsersController],
   providers: [
     UsersService,
+    UserHabitsFactory,
     {
       provide: APP_NAME,
       useValue: 'NestJS Fundamentals',
@@ -22,6 +30,13 @@ class ProdConfigService extends ConfigService {}
         process.env.NODE_ENV === 'development'
           ? DevConfigService
           : ProdConfigService,
+    },
+    {
+      provide: USER_HABITS,
+      useFactory: (userHabitsFactory: UserHabitsFactory) => {
+        return userHabitsFactory.get();
+      },
+      inject: [UserHabitsFactory],
     },
   ],
 })
