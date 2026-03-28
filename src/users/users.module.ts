@@ -14,12 +14,24 @@ class UserHabitsFactory {
   }
 }
 
+@Injectable()
+class LoggerService {
+  /* implementation details */
+}
+
+const loggerAliasProvider = {
+  provide: 'AliasedLoggerService',
+  useExisting: LoggerService,
+};
+
 @Module({
   imports: [],
   controllers: [UsersController],
   providers: [
     UsersService,
     UserHabitsFactory,
+    LoggerService,
+    loggerAliasProvider,
     {
       provide: APP_NAME,
       useValue: 'NestJS Fundamentals',
