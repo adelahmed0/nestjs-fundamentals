@@ -4,6 +4,8 @@ export class UserResponseDto {
   id: string;
   username: string;
   email: string;
+
+  @Exclude()
   country: string;
 
   @Exclude()
