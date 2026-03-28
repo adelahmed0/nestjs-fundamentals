@@ -4,6 +4,7 @@ import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { v4 as uuid } from 'uuid';
 import { APP_NAME, USER_HABITS } from './users.constants';
+import { UserResponseDto } from './dto/user-response.dto';
 
 @Injectable()
 export class UsersService {
@@ -33,13 +34,13 @@ export class UsersService {
     return user;
   }
 
-  createUser(createUserDto: CreateUserDto): UserEntity {
+  createUser(createUserDto: CreateUserDto): UserResponseDto {
     const newUser: UserEntity = {
       id: uuid(),
       ...createUserDto,
     };
     this.users.push(newUser);
-    return newUser;
+    return new UserResponseDto(newUser);
   }
 
   updateUser(id: string, updateUserDto: UpdateUserDto): UserEntity {
