@@ -12,11 +12,11 @@ export class WrapDataInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<T>,
   ): Observable<{ message: string; data: T }> {
-    console.log('Before...');
+    // console.log('Before...');
 
     return next.handle().pipe(
       map((data: T) => {
-        console.log('After...');
+        // console.log('After...');
         return {
           message: 'Success',
           data,
