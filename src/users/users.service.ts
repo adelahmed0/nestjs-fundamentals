@@ -14,13 +14,13 @@ export class UsersService {
   ) {}
   private users: UserEntity[] = [];
 
-  findUsers(): UserEntity[] {
+  findUsers(): UserResponseDto[] {
     console.log(this.appName);
     console.log(this.userHabits);
-    return this.users;
+    return this.users.map((user) => new UserResponseDto(user));
   }
 
-  findUserById(id: string): UserEntity {
+  findUserById(id: string): UserResponseDto {
     const user = this.users.find((user) => user.id === id);
     if (!user) {
       throw new NotFoundException({
@@ -31,7 +31,7 @@ export class UsersService {
         },
       });
     }
-    return user;
+    return new UserResponseDto(user);
   }
 
   createUser(createUserDto: CreateUserDto): UserResponseDto {
@@ -43,7 +43,7 @@ export class UsersService {
     return new UserResponseDto(newUser);
   }
 
-  updateUser(id: string, updateUserDto: UpdateUserDto): UserEntity {
+  updateUser(id: string, updateUserDto: UpdateUserDto): UserResponseDto {
     const index = this.users.findIndex((user) => user.id === id);
     if (index === -1) {
       throw new Error('User not found');
@@ -52,7 +52,7 @@ export class UsersService {
       ...this.users[index],
       ...updateUserDto,
     };
-    return this.users[index];
+    return new UserResponseDto(this.users[index]);
   }
 
   deleteUser(id: string): void {
