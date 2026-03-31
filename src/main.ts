@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { WrapDataInterceptor } from './common/interceptors/wrap-data.interceptor';
-import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
+// import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -31,7 +31,7 @@ async function bootstrap() {
   );
   app.useGlobalInterceptors(
     new WrapDataInterceptor(),
-    new TimeoutInterceptor(),
+    // new TimeoutInterceptor(),
   );
   await app.listen(process.env.PORT ?? 3000);
 }
