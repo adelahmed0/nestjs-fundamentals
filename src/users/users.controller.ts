@@ -9,12 +9,14 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './user.entity';
 import { UsersService } from './users.service';
 import { UserResponseDto } from './dto/user-response.dto';
+import { AuthGuard } from 'src/common/guards/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -29,7 +31,7 @@ export class UsersController {
   findOne(@Param('id', ParseUUIDPipe) id: string): UserEntity | undefined {
     return this.userService.findUserById(id);
   }
-
+  @UseGuards(AuthGuard)
   @Post()
   @HttpCode(201)
   create(@Body() createUserDto: CreateUserDto): UserResponseDto {

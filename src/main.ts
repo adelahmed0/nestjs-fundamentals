@@ -4,6 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { WrapDataInterceptor } from './common/interceptors/wrap-data.interceptor';
 import { CustomExceptionFilter } from './common/filters/custom-exception.filter';
+// import { AuthGuard } from './common/guards/auth.guard';
 // import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
 
 async function bootstrap() {
@@ -33,6 +34,8 @@ async function bootstrap() {
   );
 
   app.useGlobalFilters(new CustomExceptionFilter());
+
+  // app.useGlobalGuards(new AuthGuard());
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
