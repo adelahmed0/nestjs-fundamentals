@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  SetMetadata,
   UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -22,6 +23,7 @@ import { AuthGuard } from 'src/common/guards/auth.guard';
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
+  @SetMetadata('IS_PUBLIC', true)
   @Get()
   find(): UserEntity[] {
     return this.userService.findUsers();
