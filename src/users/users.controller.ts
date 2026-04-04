@@ -9,7 +9,6 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
-  SetMetadata,
   UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,17 +17,19 @@ import { UserEntity } from './user.entity';
 import { UsersService } from './users.service';
 import { UserResponseDto } from './dto/user-response.dto';
 import { AuthGuard } from 'src/common/guards/auth.guard';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  @SetMetadata('IS_PUBLIC', true)
+  @Public()
   @Get()
   find(): UserEntity[] {
     return this.userService.findUsers();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string): UserEntity | undefined {
     return this.userService.findUserById(id);
