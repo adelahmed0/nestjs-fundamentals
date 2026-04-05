@@ -21,7 +21,10 @@ import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UsersService) {}
+  constructor(private readonly userService: UsersService) {
+    console.log(process.env.PORT);
+    console.log(process.env.NODE_ENV);
+  }
 
   @Public()
   @Get()
