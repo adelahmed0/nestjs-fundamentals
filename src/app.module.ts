@@ -12,7 +12,18 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot(), UsersModule, CommonModule],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath:
+        process.env.NODE_ENV === 'staging'
+          ? '.env.staging'
+          : '.env.development',
+      isGlobal: true,
+      // ignoreEnvFile: false,
+    }),
+    UsersModule,
+    CommonModule,
+  ],
   controllers: [],
   providers: [
     {
