@@ -10,6 +10,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { CommonModule } from './common/common.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { ConfigModule } from '@nestjs/config';
+import ormConfig from './config/orm.config';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
           : '.env.development',
       isGlobal: true,
       // ignoreEnvFile: false,
+      load: [ormConfig],
     }),
     UsersModule,
     CommonModule,
