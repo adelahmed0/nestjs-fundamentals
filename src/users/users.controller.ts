@@ -18,12 +18,18 @@ import { UsersService } from './users.service';
 import { UserResponseDto } from './dto/user-response.dto';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import { Public } from 'src/common/decorators/public.decorator';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UsersService) {
-    console.log(process.env.DB_HOST);
-    console.log(process.env.NODE_ENV);
+  constructor(
+    private readonly userService: UsersService,
+    private readonly configService: ConfigService,
+  ) {
+    // console.log(process.env.DB_HOST);
+    // console.log(process.env.NODE_ENV);
+    console.log(this.configService.get<string>('DB_HOST'));
+    console.log(this.configService.get<string>('NODE_ENV'));
   }
 
   @Public()
