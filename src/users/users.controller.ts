@@ -20,16 +20,23 @@ import { AuthGuard } from 'src/common/guards/auth.guard';
 import { Public } from 'src/common/decorators/public.decorator';
 import { ConfigService } from '@nestjs/config';
 
+interface EnvVars {
+  DB_HOST: string;
+  NODE_ENV: string;
+  EMAIL: string;
+}
+
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly userService: UsersService,
-    private readonly configService: ConfigService,
+    private readonly configService: ConfigService<EnvVars>,
   ) {
     // console.log(process.env.DB_HOST);
     // console.log(process.env.NODE_ENV);
-    console.log(this.configService.get<string>('DB_HOST'));
-    console.log(this.configService.get<string>('NODE_ENV'));
+    console.log(this.configService.get('DB_HOST', { infer: true }));
+    console.log(this.configService.get('NODE_ENV', { infer: true }));
+    console.log(this.configService.get('EMAIL', { infer: true }));
   }
 
   @Public()

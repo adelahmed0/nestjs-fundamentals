@@ -22,6 +22,7 @@ import ormConfig from './config/orm.config';
       isGlobal: true,
       // ignoreEnvFile: false,
       load: [ormConfig],
+      expandVariables: true,
     }),
     UsersModule,
     CommonModule,
